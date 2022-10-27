@@ -4,6 +4,7 @@
  */
 package pojos;
 
+import BITalino.BITalino;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -16,16 +17,27 @@ public class Patient implements Serializable {
     private static final long serialVersionUID = -1L;
     
     private final Integer patientId;
-    private final String name;
-    private final String surname;
-    private final String gender;
+    private String name;
+    private String surname;
+    private String gender;
+    private final String email;
+    private String diagnosis;
+    private BITalino bitalino;
+    private final String username;
+    private String password;
 
-    public Patient(Integer patientId, String name, String surname, String gender) {
+    public Patient(Integer patientId, String name, String surname, String gender, String email, String diagnosis, BITalino bitalino, String username, String password) {
         this.patientId = patientId;
         this.name = name;
         this.surname = surname;
         this.gender = gender;
+        this.email = email;
+        this.diagnosis = diagnosis;
+        this.bitalino = bitalino;
+        this.username = username;
+        this.password = password;
     }
+
 
     public Integer getPatientId() {
         return patientId;
@@ -35,14 +47,61 @@ public class Patient implements Serializable {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getSurname() {
         return surname;
     }
 
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
     public String getGender() {
         return gender;
-    }   
-      
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getDiagnosis() {
+        return diagnosis;
+    }
+
+    public void setDiagnosis(String diagnosis) {
+        this.diagnosis = diagnosis;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    
+    public BITalino getBitalino() {
+        return bitalino;
+    }
+
+    public void setBitalino(BITalino bitalino) {
+        this.bitalino = bitalino;
+    }
+    
+    
+    
        @Override
     public int hashCode() {
         int hash = 3;
