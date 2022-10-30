@@ -7,6 +7,8 @@ package pojos;
 import BITalino.BITalino;
 import java.io.Serializable;
 import java.util.Objects;
+import java.sql.Date;
+import java.util.List;
 
 /**
  *
@@ -20,23 +22,38 @@ public class Patient implements Serializable {
     private String name;
     private String surname;
     private String gender;
+    private final Date birthDate;
+    private final String bloodType;
     private final String email;
     private String diagnosis;
     private BITalino bitalino;
-    private final String username;
-    private String password;
+    private List<Doctor> doctors;
+    //private  String username;
+    //private String password;
 
-    public Patient(Integer patientId, String name, String surname, String gender, String email, String diagnosis, BITalino bitalino, String username, String password) {
+    public Patient(Integer patientId, String name, String surname, String gender, Date birthDate, String bloodType, String email, String diagnosis, BITalino bitalino) {
         this.patientId = patientId;
         this.name = name;
         this.surname = surname;
         this.gender = gender;
+        this.birthDate = birthDate;
+        this.bloodType = bloodType;
         this.email = email;
         this.diagnosis = diagnosis;
         this.bitalino = bitalino;
-        this.username = username;
-        this.password = password;
     }
+
+    public Patient(Integer patientId, String name, String surname, String gender, Date birthDate, String bloodType, String email, String diagnosis) {
+        this.patientId = patientId;
+        this.name = name;
+        this.surname = surname;
+        this.gender = gender;
+        this.birthDate = birthDate;
+        this.bloodType = bloodType;
+        this.email = email;
+        this.diagnosis = diagnosis;
+    }
+    
 
 
     public Integer getPatientId() {
@@ -67,6 +84,14 @@ public class Patient implements Serializable {
         this.gender = gender;
     }
 
+    public Date getBirthDate() {
+        return birthDate;
+    }
+
+    public String getBloodType() {
+        return bloodType;
+    }
+
     public String getEmail() {
         return email;
     }
@@ -79,19 +104,6 @@ public class Patient implements Serializable {
         this.diagnosis = diagnosis;
     }
 
-    public String getUsername() {
-        return username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    
     public BITalino getBitalino() {
         return bitalino;
     }
@@ -99,16 +111,27 @@ public class Patient implements Serializable {
     public void setBitalino(BITalino bitalino) {
         this.bitalino = bitalino;
     }
-    
-    
-    
-       @Override
+
+    public List<Doctor> getDoctors() {
+        return doctors;
+    }
+
+    public void setDoctors(List<Doctor> doctors) {
+        this.doctors = doctors;
+    }
+
+    @Override
     public int hashCode() {
         int hash = 3;
         hash = 89 * hash + Objects.hashCode(this.patientId);
         hash = 89 * hash + Objects.hashCode(this.name);
         hash = 89 * hash + Objects.hashCode(this.surname);
         hash = 89 * hash + Objects.hashCode(this.gender);
+        hash = 89 * hash + Objects.hashCode(this.birthDate);
+        hash = 89 * hash + Objects.hashCode(this.bloodType);
+        hash = 89 * hash + Objects.hashCode(this.email);
+        hash = 89 * hash + Objects.hashCode(this.diagnosis);
+        hash = 89 * hash + Objects.hashCode(this.bitalino);
         return hash;
     }
 
@@ -133,8 +156,27 @@ public class Patient implements Serializable {
         if (!Objects.equals(this.gender, other.gender)) {
             return false;
         }
-        return Objects.equals(this.patientId, other.patientId);
+        if (!Objects.equals(this.bloodType, other.bloodType)) {
+            return false;
+        }
+        if (!Objects.equals(this.email, other.email)) {
+            return false;
+        }
+        if (!Objects.equals(this.diagnosis, other.diagnosis)) {
+            return false;
+        }
+        if (!Objects.equals(this.patientId, other.patientId)) {
+            return false;
+        }
+        if (!Objects.equals(this.birthDate, other.birthDate)) {
+            return false;
+        }
+        return Objects.equals(this.bitalino, other.bitalino);
     }
     
+    
+    
+    
+
     
 }

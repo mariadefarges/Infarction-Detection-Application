@@ -4,6 +4,8 @@
  */
 package pojos;
 
+import java.util.List;
+
 /**
  *
  * @author mariadefarges
@@ -13,17 +15,18 @@ public class Doctor {
     private String name;
     private String surname;
     private final String email;
-    private final String username;
-    private String password;
+    //private final String username;
+    //private String password;
 
-    public Doctor(Integer doctorId, String name, String surname, String email, String username, String password) {
+    public Doctor(Integer doctorId, String name, String surname, String email) {
         this.doctorId = doctorId;
         this.name = name;
         this.surname = surname;
         this.email = email;
-        this.username = username;
-        this.password = password;
+        //this.username = username;
+        //this.password = password;
     }
+    
     
     public String getName() {
         return name;
@@ -49,7 +52,7 @@ public class Doctor {
         return email;
     }
 
-    public String getUsername() {
+    /*public String getUsername() {
         return username;
     }
 
@@ -59,6 +62,10 @@ public class Doctor {
 
     public void setPassword(String password) {
         this.password = password;
+    }*/
+
+    public void setPatients(List<Patient> patientsOfDoctor) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
     
