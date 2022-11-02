@@ -25,7 +25,7 @@ public class PatientManager implements JDBCPatientManager {
     
     @Override
 	public void addPatient(Patient p) throws SQLException{ 
-		String sql = "INSERT INTO patients (name, surname, gender, birthDate, bloodType, email, diagnosis) VALUES (?,?,?,?,?,?,?)";
+		String sql = "INSERT INTO patients (name, surname, gender, birthDate, bloodType, email, diagnosis, ECG) VALUES (?,?,?,?,?,?,?,?)";
 		PreparedStatement prep = manager.getConnection().prepareStatement(sql);
 		prep.setString(1,p.getName());
 		prep.setString(2,p.getSurname());
@@ -34,10 +34,22 @@ public class PatientManager implements JDBCPatientManager {
 		prep.setString(5,p.getBloodType());
                 prep.setString(6,p.getEmail());
                 prep.setString(7,p.getDiagnosis());
+                prep.setString(8,p.getECG());
+		prep.executeUpdate();
+		prep.close();
+	}
+        
+        @Override
+	public void addECG(int patientId, String ECG) throws SQLException{ 
+		String sql = "INSERT INTO patients (ECG) VALUES (?) WHERE patientId = ? ";
+		PreparedStatement prep = manager.getConnection().prepareStatement(sql);
+		prep.setString(1,ECG);
+                prep.setString(2,ECG);
 		prep.executeUpdate();
 		prep.close();
 	}
 	
+        
 	@Override
 	public Patient searchPatientById(int patientId) throws SQLException { 
 		Patient p = null;
@@ -53,7 +65,8 @@ public class PatientManager implements JDBCPatientManager {
 			String bloodType = rs.getString("bloodType");
                         String email = rs.getString("email");
                         String diagnosis = rs.getString("diagnosis");
-                        p = new Patient(patientId, name, surname, gender, birthDate, bloodType, email, diagnosis);
+                        String ECG = rs.getString("ECG");
+                        p = new Patient(patientId, name, surname, gender, birthDate, bloodType, email, diagnosis, ECG);
 			p.setDoctors(dm.getDoctorsOfPatient(patientId));
 		}
 		prep.close();
@@ -78,7 +91,8 @@ public class PatientManager implements JDBCPatientManager {
 			String bloodType = rs.getString("bloodType");
 			String email = rs.getString("email");
                         String diagnosis = rs.getString("diagnosis");
-			p= new Patient(id, name, surname, gender, birthDate, bloodType, email, diagnosis);
+                        String ECG = rs.getString("ECG");
+			p= new Patient(id, name, surname, gender, birthDate, bloodType, email, diagnosis, ECG);
 			patients.add(p);
 		}
 		rs.close();	
@@ -102,7 +116,8 @@ public class PatientManager implements JDBCPatientManager {
 			String bloodType = rs.getString("bloodType");
 			String email = rs.getString("email");
                         String diagnosis = rs.getString("diagnosis");
-			p= new Patient(id, name, surname, gender, birthDate, bloodType, email, diagnosis);
+                        String ECG = rs.getString("ECG");
+			p= new Patient(id, name, surname, gender, birthDate, bloodType, email, diagnosis, ECG);
 			patients.add(p);
 		}
 		rs.close();	
@@ -126,7 +141,8 @@ public class PatientManager implements JDBCPatientManager {
 			String bloodType = rs.getString("bloodType");
 			String email = rs.getString("email");
                         String diagnosis = rs.getString("diagnosis");
-			p= new Patient(id, name, surname, gender, birthDate, bloodType, email, diagnosis);
+                        String ECG = rs.getString("ECG");
+			p= new Patient(id, name, surname, gender, birthDate, bloodType, email, diagnosis, ECG);
 			patients.add(p);
 		}
 		rs.close();	

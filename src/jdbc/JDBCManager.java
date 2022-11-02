@@ -53,6 +53,7 @@ public class JDBCManager {
                     + " bloodType TEXT NOT NULL,"
                     + "	email     TEXT NOT NULL,"
                     + "	diagnosis     TEXT NOT NULL,"
+                    + "	ECG     TEXT NOT NULL,"
                     + ");";
             stmt.executeUpdate(sql);
             sql = "CREATE TABLE doctors ("
