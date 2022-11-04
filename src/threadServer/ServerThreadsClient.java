@@ -40,6 +40,7 @@ public class ServerThreadsClient implements Runnable {
             bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                         
             while ((line = bufferedReader.readLine()) != null) { 
+                System.out.println(line);
                 /*try{
                     patientManager.addECG(patientId, line);
                 }catch(SQLException e){
