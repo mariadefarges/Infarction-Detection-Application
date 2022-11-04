@@ -56,17 +56,10 @@ public class JDBCManager {
                     + "	ECG     TEXT NOT NULL,"
                     + ");";
             stmt.executeUpdate(sql);
-            sql = "CREATE TABLE doctors ("
-                    + "	doctorId INTEGER PRIMARY KEY AUTOINCREMENT,"
-                    + "	name	 TEXT NOT NULL,"
-                    + "	surname	 TEXT NOT NULL,"
-                    + "	email    DATE NOT NULL,"
-                    + " );";
-            stmt.executeUpdate(sql);
-            sql = "CREATE TABLE patient_doctor ("
-                    + "	patient_pd INTEGER REFERENCES patients(patientId) ON DELETE CASCADE,"
-                    + "	doctor_pd INTEGER REFERENCES doctors(doctorId)  ON DELETE CASCADE,"
-                    + "	PRIMARY KEY(patient_pd,doctor_pd)\r\n"
+            sql = "CREATE TABLE files ("
+                    + "	fileId INTEGER PRIMARY KEY AUTOINCREMENT,"
+                    + "	name	  TEXT NOT NULL,"
+                    + "	patientId	  INTEGER REFERENCES patients(patientId) ON DELETE CASCADE,"
                     + ");";
             stmt.executeUpdate(sql);
         } catch (SQLException e) {

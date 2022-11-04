@@ -16,38 +16,54 @@ import java.util.logging.Logger;
 import pojos.*;
 import jdbc.*;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ServerThreadsClient implements Runnable {
 
     //int byteRead;
     Socket socket;
     String line;
-
+    JDBCManager jdbcManager = new JDBCManager();
+    FileManager fileManager = new FileManager(jdbcManager);
+    PatientManager patientManager = new PatientManager(jdbcManager, fileManager);
+    //fileManager.setPatientManager(patientManager);
+    
     public ServerThreadsClient(Socket socket) {
         this.socket = socket;
     }
     
+    /*public void receiveAndStoreParam(int patientId){
+        
+    }*/
+        
     
     @Override
     public void run() {  // receives ECG file
 
+        // se le tiene que pasar el patientId
+        // qué file path?
+        
         BufferedReader bufferedReader = null;
-        PatientManager patientManager; // ??
-        int patientId; // ??
-
+        int patientId = 1; // ??
+        File file = new File("pathname");
+        FileWriter fileWriter = null;
+        try{
+            fileWriter = new FileWriter(file.getName());
+        }catch(IOException e){
+            e.printStackTrace();
+        }
+        
         try {
-
             bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-                        
             while ((line = bufferedReader.readLine()) != null) { 
                 System.out.println(line);
-                /*try{
-                    patientManager.addECG(patientId, line);
-                }catch(SQLException e){
-                    e.printStackTrace(); //??
-                }*/
-                
-                
+                fileWriter.write(line);
+            }
+            try{
+                fileManager.addFile(file, patientId);
+            }catch(SQLException e){
+                    e.printStackTrace(); // ??
             } 
             
         } catch (IOException ex) {
@@ -55,19 +71,39 @@ public class ServerThreadsClient implements Runnable {
         } finally {
             releaseResourcesClient(bufferedReader, socket);
         }
-
     }
     
-    /*public void sendPatient(Patient patient) {
+    public void sendPatient(int patientId) {
+        Patient patient = null;
+        try{
+            patient = patientManager.searchPatientById(patientId);
+        }catch(SQLException e){
+            e.printStackTrace(); //??
+        }   
         String patientSend = patient.toString();
         try {
             PrintWriter printWriter = new PrintWriter(socket.getOutputStream(), true);
             printWriter.println(patientSend);
         } catch (IOException ex) {
-            System.out.println("An error occured tying to send the client");
             ex.printStackTrace();
         }
-    }*/
+    }
+    
+    public void sendPatientsFileNames(int patientId) {
+        Patient patient = null;
+        List<String> fileNames = new ArrayList<String>();
+        try{
+            fileNames = fileManager.getPatientsFileNamesById(patientId);
+        }catch(SQLException e){
+            e.printStackTrace(); //??
+        }   
+        try {
+            PrintWriter printWriter = new PrintWriter(socket.getOutputStream(), true);
+            printWriter.println(fileNames);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
 
     private static void releaseResourcesClient(BufferedReader bufferedReader, Socket socket) {
         try {

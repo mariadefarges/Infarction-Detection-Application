@@ -26,13 +26,11 @@ public class Patient implements Serializable {
     private final String bloodType;
     private final String email;
     private String diagnosis;
-    private String ECG;
     private BITalino bitalino;
-    private List<Doctor> doctors;
     //private  String username;
     //private String password;
 
-    public Patient(Integer patientId, String name, String surname, String gender, Date birthDate, String bloodType, String email, String diagnosis, String ECG, BITalino bitalino) {
+    public Patient(Integer patientId, String name, String surname, String gender, Date birthDate, String bloodType, String email, String diagnosis, BITalino bitalino) {
         this.patientId = patientId;
         this.name = name;
         this.surname = surname;
@@ -41,11 +39,10 @@ public class Patient implements Serializable {
         this.bloodType = bloodType;
         this.email = email;
         this.diagnosis = diagnosis;
-        this.ECG = ECG;
         this.bitalino = bitalino;
     }
 
-    public Patient(Integer patientId, String name, String surname, String gender, Date birthDate, String bloodType, String email, String diagnosis, String ECG) {
+    public Patient(Integer patientId, String name, String surname, String gender, Date birthDate, String bloodType, String email, String diagnosis) {
         this.patientId = patientId;
         this.name = name;
         this.surname = surname;
@@ -54,7 +51,6 @@ public class Patient implements Serializable {
         this.bloodType = bloodType;
         this.email = email;
         this.diagnosis = diagnosis;
-        this.ECG = ECG;
     }
     
 
@@ -107,29 +103,12 @@ public class Patient implements Serializable {
         this.diagnosis = diagnosis;
     }
     
-    public String getECG() {
-        return ECG;
-    }
-    
-    public void setECG(String ECG) {
-        this.ECG = ECG;
-    }
-
-
     public BITalino getBitalino() {
         return bitalino;
     }
 
     public void setBitalino(BITalino bitalino) {
         this.bitalino = bitalino;
-    }
-
-    public List<Doctor> getDoctors() {
-        return doctors;
-    }
-
-    public void setDoctors(List<Doctor> doctors) {
-        this.doctors = doctors;
     }
     
     @Override
@@ -150,7 +129,6 @@ public class Patient implements Serializable {
         hash = 89 * hash + Objects.hashCode(this.bloodType);
         hash = 89 * hash + Objects.hashCode(this.email);
         hash = 89 * hash + Objects.hashCode(this.diagnosis);
-        hash = 89 * hash + Objects.hashCode(this.ECG);
         hash = 89 * hash + Objects.hashCode(this.bitalino);
         return hash;
     }
@@ -185,9 +163,6 @@ public class Patient implements Serializable {
         if (!Objects.equals(this.diagnosis, other.diagnosis)) {
             return false;
         }
-        if (!Objects.equals(this.ECG, other.ECG)) {
-            return false;
-        }
         if (!Objects.equals(this.patientId, other.patientId)) {
             return false;
         }
@@ -196,10 +171,4 @@ public class Patient implements Serializable {
         }
         return Objects.equals(this.bitalino, other.bitalino);
     }
-    
-    
-    
-    
-
-    
 }

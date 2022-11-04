@@ -16,17 +16,12 @@ public interface JDBCPatientManager {
    
     public void addPatient(Patient p) throws SQLException;
     
-    public void addECG(int patientId, String ECG) throws SQLException;
-    
-    public List<Patient> searchPatientbyName (String name, int doctorId) throws SQLException;
+    public List<Patient> searchPatientbyName (String name) throws SQLException;
 	
-    public List<Patient> searchPatientbySurname (String surname, int doctorId) throws SQLException;
+    public List<Patient> searchPatientbySurname (String surname) throws SQLException;
 	
     public Patient searchPatientById(int patientId) throws SQLException, Exception;
-	
-    public List<Patient> getPatientsOfDoctor(int doctorId) throws SQLException;
     
-    
-	
-    
+    public String getPatientsFullNameById(int patientId) throws SQLException; 
+
 }
