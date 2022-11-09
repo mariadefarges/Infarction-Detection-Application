@@ -4,21 +4,21 @@
  */
 package jdbc;
 
-import ifaces.JDBCPatientManager;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import pojos.Patient;
+import ifaces.PatientManager;
 
 /**
  *
  * @author mariadefarges
  */
-public class PatientManager implements JDBCPatientManager {
+public class JDBCPatientManager implements PatientManager {
     private JDBCManager manager;
-    private FileManager fileManager;
+    private JDBCFileManager fileManager;
     
-    public PatientManager(JDBCManager m, FileManager fm) {
+    public JDBCPatientManager(JDBCManager m, JDBCFileManager fm) {
 		this.manager = m;
                 this.fileManager = fm;
     }

@@ -27,10 +27,9 @@ public class Patient implements Serializable {
     private final String email;
     private String diagnosis;
     private BITalino bitalino;
-    //private  String username;
-    //private String password;
+    private Integer userId;
 
-    public Patient(Integer patientId, String name, String surname, String gender, Date birthDate, String bloodType, String email, String diagnosis, BITalino bitalino) {
+    public Patient(Integer patientId, String name, String surname, String gender, Date birthDate, String bloodType, String email, String diagnosis, Integer userId) {
         this.patientId = patientId;
         this.name = name;
         this.surname = surname;
@@ -40,9 +39,9 @@ public class Patient implements Serializable {
         this.email = email;
         this.diagnosis = diagnosis;
         this.bitalino = bitalino;
+        this.userId= userId;
     }
-
-    public Patient(Integer patientId, String name, String surname, String gender, Date birthDate, String bloodType, String email, String diagnosis) {
+        public Patient(Integer patientId, String name, String surname, String gender, Date birthDate, String bloodType, String email, String diagnosis) {
         this.patientId = patientId;
         this.name = name;
         this.surname = surname;
@@ -51,9 +50,9 @@ public class Patient implements Serializable {
         this.bloodType = bloodType;
         this.email = email;
         this.diagnosis = diagnosis;
-    }
-    
+        this.bitalino = null;
 
+    }
 
     public Integer getPatientId() {
         return patientId;
@@ -111,25 +110,30 @@ public class Patient implements Serializable {
         this.bitalino = bitalino;
     }
     
+    public Integer getUserId() {
+        return userId;
+    }
+
     @Override
     public String toString() {
-        return ("\nId: " + patientId + "\nName: " + name + "\nSurname: " + surname + "\nGender: " + gender + "\nBirthDate: "
-                        + birthDate + "\nBloodType: " + bloodType + "\nEmail: " + email
-                        + "\nDiagnosis: " + diagnosis + "\n");
+        return "Patient{" + "patientId=" + patientId + ", name=" + name + ", surname=" + surname +
+                ", gender=" + gender + ", birthDate=" + birthDate + ", bloodType=" + bloodType + 
+                ", email=" + email + ", diagnosis=" + diagnosis + ", bitalino=" + bitalino + ", userId=" + userId + '}';
     }
 
     @Override
     public int hashCode() {
         int hash = 3;
-        hash = 89 * hash + Objects.hashCode(this.patientId);
-        hash = 89 * hash + Objects.hashCode(this.name);
-        hash = 89 * hash + Objects.hashCode(this.surname);
-        hash = 89 * hash + Objects.hashCode(this.gender);
-        hash = 89 * hash + Objects.hashCode(this.birthDate);
-        hash = 89 * hash + Objects.hashCode(this.bloodType);
-        hash = 89 * hash + Objects.hashCode(this.email);
-        hash = 89 * hash + Objects.hashCode(this.diagnosis);
-        hash = 89 * hash + Objects.hashCode(this.bitalino);
+        hash = 73 * hash + Objects.hashCode(this.patientId);
+        hash = 73 * hash + Objects.hashCode(this.name);
+        hash = 73 * hash + Objects.hashCode(this.surname);
+        hash = 73 * hash + Objects.hashCode(this.gender);
+        hash = 73 * hash + Objects.hashCode(this.birthDate);
+        hash = 73 * hash + Objects.hashCode(this.bloodType);
+        hash = 73 * hash + Objects.hashCode(this.email);
+        hash = 73 * hash + Objects.hashCode(this.diagnosis);
+        hash = 73 * hash + Objects.hashCode(this.bitalino);
+        hash = 73 * hash + Objects.hashCode(this.userId);
         return hash;
     }
 
@@ -169,6 +173,13 @@ public class Patient implements Serializable {
         if (!Objects.equals(this.birthDate, other.birthDate)) {
             return false;
         }
-        return Objects.equals(this.bitalino, other.bitalino);
+        if (!Objects.equals(this.bitalino, other.bitalino)) {
+            return false;
+        }
+        return Objects.equals(this.userId, other.userId);
     }
+    
+    
+    
+
 }

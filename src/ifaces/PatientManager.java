@@ -12,7 +12,7 @@ import java.util.List;
  *
  * @author mariadefarges
  */
-public interface JDBCPatientManager {
+public interface PatientManager {
    
     public void addPatient(Patient p) throws SQLException;
     

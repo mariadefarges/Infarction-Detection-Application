@@ -16,7 +16,7 @@ public class JDBCManager {
     public JDBCManager() {
         try {
             Class.forName("org.sqlite.JDBC");
-            c = DriverManager.getConnection("jdbc:sqlite:./db/dentalClinic.db");
+            c = DriverManager.getConnection("jdbc:sqlite:./db/PatientApp.db");
             c.createStatement().execute("PRAGMA foreign_keys=ON");
             System.out.println("Database connection opened.");
 
@@ -54,6 +54,7 @@ public class JDBCManager {
                     + "	email     TEXT NOT NULL,"
                     + "	diagnosis     TEXT NOT NULL,"
                     + "	ECG     TEXT NOT NULL,"
+                    + " userId INTEGER REFERENCES users(id) ON DELETE CASCADE"
                     + ");";
             stmt.executeUpdate(sql);
             sql = "CREATE TABLE files ("

@@ -12,7 +12,7 @@ import java.util.List;
  *
  * @author carlo
  */
-public interface JDBCFileManager {
+public interface FileManager {
     
     public void addFile(File file, int patientId) throws SQLException;
     

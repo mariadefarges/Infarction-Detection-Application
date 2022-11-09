@@ -17,11 +17,11 @@ import pojos.Patient;
  *
  * @author carlo
  */
-public class FileManager implements JDBCFileManager {
+public class JDBCFileManager implements FileManager {
     private JDBCManager manager;
     private PatientManager patientManager;
     
-    public FileManager(JDBCManager m) {
+    public JDBCFileManager(JDBCManager m) {
 		this.manager = m;	
     }
     
