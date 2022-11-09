@@ -25,8 +25,8 @@ public class ServerThreadsClient implements Runnable {
     Socket socket;
     String line;
     JDBCManager jdbcManager = new JDBCManager();
-    FileManager fileManager = new FileManager(jdbcManager);
-    PatientManager patientManager = new PatientManager(jdbcManager, fileManager);
+    JDBCFileManager fileManager = new JDBCFileManager(jdbcManager);
+    JDBCPatientManager patientManager = new JDBCPatientManager(jdbcManager, fileManager);
     //fileManager.setPatientManager(patientManager);
     
     public ServerThreadsClient(Socket socket) {
