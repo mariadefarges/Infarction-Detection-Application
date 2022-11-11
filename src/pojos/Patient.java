@@ -7,6 +7,7 @@ package pojos;
 import java.io.Serializable;
 import java.util.Objects;
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.Arrays;
 
 /**
@@ -21,14 +22,14 @@ public class Patient implements Serializable {
     private String name;
     private String surname;
     private String gender;
-    private final Date birthDate;
+    private final LocalDate birthDate;
     private final String bloodType;
     private final String email;
     private byte[] password;
     private String symptoms;
     private String bitalino;
 
-    public Patient(Integer patientId, String name, String surname, String gender, Date birthDate, String bloodType, String email, byte[] password, String symptoms, String bitalino) {
+    public Patient(Integer patientId, String name, String surname, String gender, LocalDate birthDate, String bloodType, String email, byte[] password, String symptoms, String bitalino) {
         this.patientId = patientId;
         this.name = name;
         this.surname = surname;
@@ -42,7 +43,7 @@ public class Patient implements Serializable {
 
     }
 
-    public Patient(String name, String surname, String gender, Date birthDate, String bloodType, String email, byte[] password, String symptoms, String bitalino) {
+    public Patient(String name, String surname, String gender, LocalDate birthDate, String bloodType, String email, byte[] password, String symptoms, String bitalino) {
         this.name = name;
         this.surname = surname;
         this.gender = gender;
@@ -87,7 +88,7 @@ public class Patient implements Serializable {
         this.gender = gender;
     }
 
-    public Date getBirthDate() {
+    public LocalDate getBirthDate() {
         return birthDate;
     }
 

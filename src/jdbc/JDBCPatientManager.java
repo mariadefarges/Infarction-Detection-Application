@@ -8,6 +8,7 @@ import ifaces.PatientManager;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.NoResultException;
@@ -32,7 +33,7 @@ public class JDBCPatientManager implements PatientManager {
         prep.setString(1, p.getName());
         prep.setString(2, p.getSurname());
         prep.setString(3, p.getGender());
-        prep.setDate(4, p.getBirthDate());
+        prep.setDate(4, java.sql.Date.valueOf(p.getBirthDate()));
         prep.setString(5, p.getBloodType());
         prep.setString(6, p.getEmail());
         prep.setBytes(7, p.getPassword());
@@ -41,6 +42,18 @@ public class JDBCPatientManager implements PatientManager {
         prep.close();
     }
 
+    
+    @Override
+    public int getPatientId(String email, String password) throws SQLException {
+        String sql = "SELECT patientId FROM patients WHERE email = ? AND password = ?";
+        PreparedStatement prep = manager.getConnection().prepareStatement(sql);
+        prep.setString(1, email);
+        prep.setString(1, password);
+        ResultSet rs = prep.executeQuery();
+        int patientId = rs.getInt("patientId");
+        return patientId;   
+    }
+    
     @Override
     public Patient searchPatientById(int patientId) throws SQLException {
         Patient p = null;
@@ -52,7 +65,7 @@ public class JDBCPatientManager implements PatientManager {
             String name = rs.getString("name");
             String surname = rs.getString("surname");
             String gender = rs.getString("gender");
-            Date birthDate = rs.getDate("birthDate");
+            LocalDate birthDate = rs.getDate("birthDate").toLocalDate();
             String bloodType = rs.getString("bloodType");
             String email = rs.getString("email");
             byte[] password = rs.getBytes("password");
@@ -78,7 +91,7 @@ public class JDBCPatientManager implements PatientManager {
             int id = rs.getInt("patientId");
             String surname = rs.getString("surname");
             String gender = rs.getString("gender");
-            Date birthDate = rs.getDate("birthDate");
+            LocalDate birthDate = rs.getDate("birthDate").toLocalDate();
             String bloodType = rs.getString("bloodType");
             String email = rs.getString("email");
             byte[] password = rs.getBytes("password");
@@ -104,7 +117,7 @@ public class JDBCPatientManager implements PatientManager {
             int id = rs.getInt("patientId");
             String name = rs.getString("name");
             String gender = rs.getString("gender");
-            Date birthDate = rs.getDate("birthDate");
+            LocalDate birthDate = rs.getDate("birthDate").toLocalDate();
             String bloodType = rs.getString("bloodType");
             String email = rs.getString("email");
             byte[] password = rs.getBytes("password");
@@ -143,7 +156,7 @@ public class JDBCPatientManager implements PatientManager {
         if (rs.next()) {
             p = new Patient(rs.getInt("patientId"), rs.getString("name"),
                     rs.getString("surname"), rs.getString("gender"),
-                    rs.getDate("birthDate"), rs.getString("bloodType"),
+                    rs.getDate("birthDate").toLocalDate(), rs.getString("bloodType"),
                     rs.getString("email"), rs.getBytes("password"), rs.getString("symptoms"),
                     rs.getString("bitalino"));
         }
@@ -167,7 +180,7 @@ public class JDBCPatientManager implements PatientManager {
             if (rs.next()) {
                 p = new Patient(rs.getInt("patientId"), rs.getString("name"),
                     rs.getString("surname"), rs.getString("gender"),
-                    rs.getDate("birthDate"), rs.getString("bloodType"),
+                    rs.getDate("birthDate").toLocalDate(), rs.getString("bloodType"),
                     rs.getString("email"), rs.getBytes("password"), rs.getString("symptoms"),
                     rs.getString("bitalino"));
             }

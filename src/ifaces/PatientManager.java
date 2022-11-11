@@ -22,6 +22,8 @@ public interface PatientManager {
 	
     public Patient searchPatientById(int patientId) throws SQLException, Exception;
     
+    public int getPatientId(String email, String password) throws SQLException;
+    
     public String getPatientsFullNameById(int patientId) throws SQLException; 
 
     public Patient checkPassword(String email, String password) throws SQLException;
