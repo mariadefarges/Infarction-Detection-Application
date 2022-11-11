@@ -52,9 +52,9 @@ public class JDBCManager {
                     + "	birthDate DATE NOT NULL,"                   
                     + " bloodType TEXT NOT NULL,"
                     + "	email     TEXT NOT NULL,"
-                    + "	diagnosis     TEXT NOT NULL,"
-                    + "	ECG     TEXT NOT NULL,"
-                    + " userId INTEGER REFERENCES users(id) ON DELETE CASCADE"
+                    + " password    TEXT NOT NULL,"
+                    + "	symptoms     TEXT NOT NULL,"
+                    + "	bitalino     TEXT NOT NULL,"
                     + ");";
             stmt.executeUpdate(sql);
             sql = "CREATE TABLE files ("
@@ -62,6 +62,7 @@ public class JDBCManager {
                     + "	name	  TEXT NOT NULL,"
                     + "	patientId	  INTEGER REFERENCES patients(patientId) ON DELETE CASCADE,"
                     + ");";
+            
             stmt.executeUpdate(sql);
         } catch (SQLException e) {
             if (!e.getMessage().contains("Already exists")) {
