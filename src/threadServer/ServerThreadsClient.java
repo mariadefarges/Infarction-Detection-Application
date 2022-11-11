@@ -39,77 +39,83 @@ public class ServerThreadsClient implements Runnable {
     
     @Override
     public void run() {  
-        int patientId = 0;
         BufferedReader bufferedReader = null;
+        int opcion = 0;
         try{
-            String id = bufferedReader.readLine();
-            patientId = Integer.parseInt(id);
+            opcion = bufferedReader.read();
         }catch(IOException e){
             e.printStackTrace();
         }
+        switch(opcion){
+            case 1:
+                try{
+                    sendPatient();
+                }catch(IOException e){
+                    e.printStackTrace();
+                }catch(SQLException s){
+                    s.printStackTrace();
+                }
+                break;
+            case 2:
+                try{
+                    sendPatientsFileNames();
+                }catch(IOException e){
+                    e.printStackTrace();
+                }catch(SQLException s){
+                    s.printStackTrace();
+                }
+                break;
+            case 3:
+                try{
+                    receiveAndSafeSignal();
+                }catch(IOException e){
+                    e.printStackTrace();
+                }catch(SQLException s){
+                    s.printStackTrace();
+                }
+                break;
+        } 
+    }
+    
+    public void receiveAndSafeSignal() throws IOException, SQLException{
+        BufferedReader bufferedReader = null;
+        int patientId = bufferedReader.read();
         LocalDateTime current  = LocalDateTime.now();
         DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy.HH-mm-ss");
         String formattedDateTime = current.format(format);
-        
         String userHome = System.getProperty("user.home");
         // patients/<PATIENT_ID>/YYYYMMDD-HHMMSS_<PATIENT_ID>.txt
         String path = "/patient" + patientId + "_" + formattedDateTime + ".txt";
         File file = new File(userHome + path);
         FileWriter fileWriter = null;
-        try{
-            fileWriter = new FileWriter(file);
-        }catch(IOException e){
-            e.printStackTrace();
+        fileWriter = new FileWriter(file);
+        bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+        while ((line = bufferedReader.readLine()) != null) { 
+            System.out.println(line);
+            fileWriter.write(line);
         }
-        try {
-            bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            while ((line = bufferedReader.readLine()) != null) { 
-                System.out.println(line);
-                fileWriter.write(line);
-            }
-            try{
-                fileManager.addFile(file, patientId);
-            }catch(SQLException e){
-                    e.printStackTrace(); // ??
-            } 
-            
-        } catch (IOException ex) {
-            Logger.getLogger(ServerThreadsClient.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            releaseResourcesClient(bufferedReader, socket);
-        }
+        fileManager.addFile(file, patientId);
+        releaseResourcesClient(bufferedReader, socket);
     }
     
-    public void sendPatient(int patientId) {
+    public void sendPatient() throws IOException, SQLException{
         Patient patient = null;
-        try{
-            patient = patientManager.searchPatientById(patientId);
-        }catch(SQLException e){
-            e.printStackTrace(); //??
-        }   
+        BufferedReader bufferedReader = null;
+        int patientId = bufferedReader.read();
+        patient = patientManager.searchPatientById(patientId);
         String patientSend = patient.toString2();
-        try {
-            PrintWriter printWriter = new PrintWriter(socket.getOutputStream(), true);
-            printWriter.println(patientSend);
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
+        PrintWriter printWriter = new PrintWriter(socket.getOutputStream(), true);
+        printWriter.println(patientSend);
     }
     
-    public void sendPatientsFileNames(int patientId) {
+    public void sendPatientsFileNames() throws IOException, SQLException {
         Patient patient = null;
+        BufferedReader bufferedReader = null;
+        int patientId = bufferedReader.read();
         List<String> fileNames = new ArrayList<String>();
-        try{
-            fileNames = fileManager.getPatientsFileNamesById(patientId);
-        }catch(SQLException e){
-            e.printStackTrace(); //??
-        }   
-        try {
-            PrintWriter printWriter = new PrintWriter(socket.getOutputStream(), true);
-            printWriter.println(fileNames);
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
+        fileNames = fileManager.getPatientsFileNamesById(patientId);
+        PrintWriter printWriter = new PrintWriter(socket.getOutputStream(), true);
+        printWriter.println(fileNames);
     }
 
     private static void releaseResourcesClient(BufferedReader bufferedReader, Socket socket) {
