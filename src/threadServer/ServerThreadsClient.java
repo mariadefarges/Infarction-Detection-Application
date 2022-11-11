@@ -16,8 +16,11 @@ import java.util.logging.Logger;
 import pojos.*;
 import jdbc.*;
 import java.sql.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+
 
 public class ServerThreadsClient implements Runnable {
 
@@ -32,28 +35,30 @@ public class ServerThreadsClient implements Runnable {
     public ServerThreadsClient(Socket socket) {
         this.socket = socket;
     }
-    
-    /*public void receiveAndStoreParam(int patientId){
-        
-    }*/
         
     
     @Override
-    public void run() {  // receives ECG file
-
-        // se le tiene que pasar el patientId
-        // qué file path?
-        
+    public void run() {  
+        int patientId = 0;
         BufferedReader bufferedReader = null;
-        int patientId = 1; // ??
-        File file = new File("pathname");
+        try{
+            String id = bufferedReader.readLine();
+            patientId = Integer.parseInt(id);
+        }catch(IOException e){
+            e.printStackTrace();
+        }
+        LocalDateTime current  = LocalDateTime.now();
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy_HH-mm-ss");
+        String formattedDateTime = current.format(format);
+        // patients/<PATIENT_ID>/YYYYMMDD-HHMMSS_<PATIENT_ID>.txt
+        String path = "patients\\<" + patientId + ">\\" + formattedDateTime + "\\<" + patientId + ">.txt";
+        File file = new File(path);
         FileWriter fileWriter = null;
         try{
             fileWriter = new FileWriter(file.getName());
         }catch(IOException e){
             e.printStackTrace();
         }
-        
         try {
             bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             while ((line = bufferedReader.readLine()) != null) { 
