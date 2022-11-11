@@ -9,15 +9,14 @@ import java.util.Objects;
 import java.sql.Date;
 import java.util.Arrays;
 
-
 /**
  *
  * @author mariadefarges
  */
 public class Patient implements Serializable {
-    
+
     private static final long serialVersionUID = -1L;
-    
+
     private Integer patientId;
     private String name;
     private String surname;
@@ -40,10 +39,10 @@ public class Patient implements Serializable {
         this.password = password;
         this.symptoms = symptoms;
         this.bitalino = bitalino;
-     
+
     }
-    
-        public Patient(String name, String surname, String gender, Date birthDate, String bloodType, String email, byte[] password ,String symptoms, String bitalino) {
+
+    public Patient(String name, String surname, String gender, Date birthDate, String bloodType, String email, byte[] password, String symptoms, String bitalino) {
         this.name = name;
         this.surname = surname;
         this.gender = gender;
@@ -53,14 +52,13 @@ public class Patient implements Serializable {
         this.password = password;
         this.symptoms = symptoms;
         this.bitalino = bitalino;
-     
+
     }
 
     /*public Patient(Integer patientId, String email, byte[] hash) {
         this.email = email;
         this.password = hash;
     }*/
-
     public Integer getPatientId() {
         return patientId;
     }
@@ -100,10 +98,11 @@ public class Patient implements Serializable {
     public String getEmail() {
         return email;
     }
+
     public byte[] getPassword() {
         return password;
     }
-    
+
     public void setPassword(byte[] password) {
         this.password = password;
     }
@@ -115,7 +114,7 @@ public class Patient implements Serializable {
     public void setSymptoms(String symptoms) {
         this.symptoms = symptoms;
     }
-    
+
     public String getBitalino() {
         return bitalino;
     }
@@ -184,13 +183,14 @@ public class Patient implements Serializable {
 
     @Override
     public String toString() {
-        return "Patient{" + "patientId=" + patientId + ", name=" + name + ", surname=" + surname 
-                + ", gender=" + gender + ", birthDate=" + birthDate + ", bloodType=" + bloodType 
+        return "Patient{" + "patientId=" + patientId + ", name=" + name + ", surname=" + surname
+                + ", gender=" + gender + ", birthDate=" + birthDate + ", bloodType=" + bloodType
                 + ", email=" + email + ", password=" + password + ", symptoms=" + symptoms + ", bitalino=" + bitalino + '}';
     }
 
-    
-    
-
+    public String toString2() {
+        return patientId + "\n" + name + "\n" + surname + "\n" + gender + "\n" + birthDate + "\n" + bloodType
+                + "\n" + email + "\n" + password + "\n" + symptoms + "\n" + bitalino;
+    }
 
 }
