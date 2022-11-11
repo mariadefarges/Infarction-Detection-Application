@@ -29,7 +29,7 @@ public class ServerThreadsClient implements Runnable {
     String line;
     JDBCManager jdbcManager = new JDBCManager();
     JDBCFileManager fileManager = new JDBCFileManager(jdbcManager);
-    JDBCPatientManager patientManager = new JDBCPatientManager(jdbcManager, fileManager);
+    JDBCPatientManager patientManager = new JDBCPatientManager(jdbcManager);
     //fileManager.setPatientManager(patientManager);
     
     public ServerThreadsClient(Socket socket) {
@@ -48,14 +48,16 @@ public class ServerThreadsClient implements Runnable {
             e.printStackTrace();
         }
         LocalDateTime current  = LocalDateTime.now();
-        DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy_HH-mm-ss");
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy.HH-mm-ss");
         String formattedDateTime = current.format(format);
+        
+        String userHome = System.getProperty("user.home");
         // patients/<PATIENT_ID>/YYYYMMDD-HHMMSS_<PATIENT_ID>.txt
-        String path = "patients\\<" + patientId + ">\\" + formattedDateTime + "\\<" + patientId + ">.txt";
-        File file = new File(path);
+        String path = "/patient" + patientId + "_" + formattedDateTime + ".txt";
+        File file = new File(userHome + path);
         FileWriter fileWriter = null;
         try{
-            fileWriter = new FileWriter(file.getName());
+            fileWriter = new FileWriter(file);
         }catch(IOException e){
             e.printStackTrace();
         }
@@ -85,7 +87,7 @@ public class ServerThreadsClient implements Runnable {
         }catch(SQLException e){
             e.printStackTrace(); //??
         }   
-        String patientSend = patient.toString();
+        String patientSend = patient.toString2();
         try {
             PrintWriter printWriter = new PrintWriter(socket.getOutputStream(), true);
             printWriter.println(patientSend);
