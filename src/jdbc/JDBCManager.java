@@ -44,24 +44,24 @@ public class JDBCManager {
         // Create Tables
         try {
             Statement stmt = c.createStatement();
-            String sql = "CREATE TABLE patients ("
-                    + "	patientId INTEGER PRIMARY KEY AUTOINCREMENT,"
-                    + "	name	  TEXT NOT NULL,"
-                    + " surname   TEXT NOT NULL,"
-                    + "	gender	  TEXT NOT NULL,"
+            String sql = "CREATE TABLE patients "
+                    + "(patientId INTEGER PRIMARY KEY AUTOINCREMENT,"
+                    + "	name TEXT NOT NULL,"
+                    + " surname TEXT NOT NULL,"
+                    + "	gender TEXT NOT NULL,"
                     + "	birthDate DATE NOT NULL,"                   
                     + " bloodType TEXT NOT NULL,"
-                    + "	email     TEXT NOT NULL,"
-                    + " password    TEXT NOT NULL,"
-                    + "	symptoms     TEXT NOT NULL,"
-                    + "	bitalino     TEXT NOT NULL"
-                    + ");";            
+                    + "	email TEXT NOT NULL,"
+                    + " password TEXT NOT NULL,"
+                    + "	symptoms TEXT NOT NULL,"
+                    + "	bitalino TEXT NOT NULL)" ;
+                               
             stmt.executeUpdate(sql);
-            sql = "CREATE TABLE files ("
-                    + "	fileId INTEGER PRIMARY KEY AUTOINCREMENT,"
-                    + "	name	  TEXT NOT NULL,"
-                    + "	patientId	  INTEGER REFERENCES patients(patientId) ON DELETE CASCADE"
-                    + ");";
+            sql = "CREATE TABLE files "
+                    + "(fileId INTEGER PRIMARY KEY AUTOINCREMENT,"
+                    + "	name TEXT NOT NULL,"
+                    + "	patientId INTEGER REFERENCES patients(patientId) ON DELETE CASCADE )";
+                    
             stmt.executeUpdate(sql);
         } catch (SQLException e) {
             if (!e.getMessage().contains("Already exists")) {
