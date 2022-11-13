@@ -16,7 +16,7 @@ public class JDBCManager {
     public JDBCManager() {
         try {
             Class.forName("org.sqlite.JDBC");
-            c = DriverManager.getConnection("jdbc:sqlite:./db/PatientApp.db");
+            c = DriverManager.getConnection("jdbc:sqlite:./db/ServerApp.db");
             c.createStatement().execute("PRAGMA foreign_keys=ON");
             System.out.println("Database connection opened.");
 
@@ -54,15 +54,14 @@ public class JDBCManager {
                     + "	email     TEXT NOT NULL,"
                     + " password    TEXT NOT NULL,"
                     + "	symptoms     TEXT NOT NULL,"
-                    + "	bitalino     TEXT NOT NULL,"
-                    + ");";
+                    + "	bitalino     TEXT NOT NULL"
+                    + ");";            
             stmt.executeUpdate(sql);
             sql = "CREATE TABLE files ("
                     + "	fileId INTEGER PRIMARY KEY AUTOINCREMENT,"
                     + "	name	  TEXT NOT NULL,"
-                    + "	patientId	  INTEGER REFERENCES patients(patientId) ON DELETE CASCADE,"
+                    + "	patientId	  INTEGER REFERENCES patients(patientId) ON DELETE CASCADE"
                     + ");";
-            
             stmt.executeUpdate(sql);
         } catch (SQLException e) {
             if (!e.getMessage().contains("Already exists")) {

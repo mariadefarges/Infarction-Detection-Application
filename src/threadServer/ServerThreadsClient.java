@@ -41,8 +41,9 @@ public class ServerThreadsClient implements Runnable {
     @Override
     public void run() {  
         BufferedReader bufferedReader = null;
+        InputStream inputStream = null;
         try{
-            InputStream inputStream = socket.getInputStream();
+            inputStream = socket.getInputStream();
             int opcion = 0;
             try{
             opcion = inputStream.read();
@@ -94,6 +95,11 @@ public class ServerThreadsClient implements Runnable {
             } catch (IOException ex) {
                 Logger.getLogger(ServerThreadsClient.class.getName()).log(Level.SEVERE, null, ex);
             }
+            try {
+                inputStream.close();
+            } catch (IOException ex) {
+                Logger.getLogger(ServerThreadsClient.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
     
@@ -105,8 +111,11 @@ public class ServerThreadsClient implements Runnable {
             atributes.add(line);
         }
         String name = atributes.get(0);
+        System.out.println(name);
         String surname = atributes.get(1);
+        System.out.println(surname);
         String gender = atributes.get(2);
+        System.out.println(gender);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("DD-MM-YYYY");
         LocalDate birthDate = LocalDate.parse(atributes.get(3), formatter);
         String bloodType = atributes.get(4);

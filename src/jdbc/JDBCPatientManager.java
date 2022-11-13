@@ -11,7 +11,6 @@ import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.NoResultException;
 import pojos.Patient;
 
 /**
@@ -189,9 +188,9 @@ public class JDBCPatientManager implements PatientManager {
             return p;
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
-        } catch (NoResultException nre) {
+        } /*catch (NoResultException nre) {
             return null;
-        }
+        }*/
         return null;
     }
 
