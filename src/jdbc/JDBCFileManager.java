@@ -35,6 +35,8 @@ public class JDBCFileManager implements FileManager {
 		PreparedStatement prep = manager.getConnection().prepareStatement(sql);
 		prep.setString(1,file.getName());
 		prep.setInt(2,patientId);
+                // C:/Users/Carlota/etc...
+                // patients/<PATIENT_ID>/YYYYMMDD-HHMMSS_<PATIENT_ID>.txt
 		prep.executeUpdate();
 		prep.close();
 	

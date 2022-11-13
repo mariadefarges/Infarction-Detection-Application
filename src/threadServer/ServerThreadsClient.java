@@ -41,49 +41,60 @@ public class ServerThreadsClient implements Runnable {
     @Override
     public void run() {  
         BufferedReader bufferedReader = null;
-        int opcion = 0;
         try{
-            opcion = bufferedReader.read();
-        }catch(IOException e){
-            e.printStackTrace();
+            InputStream inputStream = socket.getInputStream();
+            int opcion = 0;
+            try{
+            opcion = inputStream.read();
+            }catch(IOException e){
+                e.printStackTrace();
+            }
+            switch(opcion){
+                case 1:
+                    try{
+                        sendPatient();
+                    }catch(IOException | SQLException e){
+                        e.printStackTrace();
+                    }
+                    break;
+                case 2:
+                    try{
+                        sendPatientsFileNames();
+                    }catch(IOException | SQLException e){
+                        e.printStackTrace();
+                    }
+                    break;
+                case 3:
+                    try{
+                        receiveAndSafeSignal();
+                    }catch(IOException | SQLException e){
+                        e.printStackTrace();
+                    }
+                    break;
+                case 4:
+                    try{
+                        register();
+                    }catch(IOException | SQLException e){
+                        e.printStackTrace();
+                    }
+                    break;
+                case 5:
+                    try{
+                        login();
+                    }catch(IOException | SQLException e){
+                        e.printStackTrace();
+                    }
+                    break;
+            }
+        }catch(IOException ex){
+            Logger.getLogger(ServerThreadsClient.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                bufferedReader.close();
+            } catch (IOException ex) {
+                Logger.getLogger(ServerThreadsClient.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
-        switch(opcion){
-            case 1:
-                try{
-                    sendPatient();
-                }catch(IOException | SQLException e){
-                    e.printStackTrace();
-                }
-                break;
-            case 2:
-                try{
-                    sendPatientsFileNames();
-                }catch(IOException | SQLException e){
-                    e.printStackTrace();
-                }
-                break;
-            case 3:
-                try{
-                    receiveAndSafeSignal();
-                }catch(IOException | SQLException e){
-                    e.printStackTrace();
-                }
-                break;
-            case 4:
-                try{
-                    register();
-                }catch(IOException | SQLException e){
-                    e.printStackTrace();
-                }
-                break;
-            case 5:
-                try{
-                    login();
-                }catch(IOException | SQLException e){
-                    e.printStackTrace();
-                }
-                break;        
-        } 
     }
     
     public void register() throws IOException, SQLException{
@@ -106,6 +117,7 @@ public class ServerThreadsClient implements Runnable {
         
         Patient patient = new Patient(name, surname, gender, birthDate, bloodType, email, password, symptoms, bitalino);
         patientManager.addPatient(patient);
+        System.out.println(patient);
     }
     
     public void login() throws IOException, SQLException {
