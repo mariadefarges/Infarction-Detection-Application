@@ -37,13 +37,27 @@ public class ServerThreads {
                         System.out.println("There are clients still connected. \n Are you sure you want to close the server? Y/N");
                         option = InputOutput.get_String();
                         if (option.equals("Y")){
-                            releaseResourcesServer(serverSocket);
-                            System.exit(0);
+                            System.out.println("Password: \n");
+                            String password = InputOutput.get_String();
+                            if (password.equals("12345")){
+                                releaseResourcesServer(serverSocket);
+                                System.exit(0);
+                            }
+                            else{
+                                System.out.println("Incorrect password.");
+                            }
                         }
                     }
                     else{
-                        releaseResourcesServer(serverSocket);
-                        System.exit(0);
+                        System.out.println("Password: \n");
+                        String password = InputOutput.get_String();
+                            if (password.equals("12345")){
+                                releaseResourcesServer(serverSocket);
+                                System.exit(0);
+                            }
+                            else{
+                                System.out.println("Incorrect password.");
+                            }
                     }
                 }
                 Socket socket = serverSocket.accept();
