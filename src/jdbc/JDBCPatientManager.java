@@ -65,7 +65,7 @@ public class JDBCPatientManager implements PatientManager {
             String name = rs.getString("name");
             String surname = rs.getString("surname");
             String gender = rs.getString("gender");
-            LocalDate birthDate = rs.getDate("birthDate").toLocalDate();
+            Date birthDate = rs.getDate("birthDate");
             String bloodType = rs.getString("bloodType");
             String email = rs.getString("email");
             byte[] password = rs.getBytes("password");
@@ -91,7 +91,7 @@ public class JDBCPatientManager implements PatientManager {
             int id = rs.getInt("patientId");
             String surname = rs.getString("surname");
             String gender = rs.getString("gender");
-            LocalDate birthDate = rs.getDate("birthDate").toLocalDate();
+            Date birthDate = rs.getDate("birthDate");
             String bloodType = rs.getString("bloodType");
             String email = rs.getString("email");
             byte[] password = rs.getBytes("password");
@@ -117,7 +117,7 @@ public class JDBCPatientManager implements PatientManager {
             int id = rs.getInt("patientId");
             String name = rs.getString("name");
             String gender = rs.getString("gender");
-            LocalDate birthDate = rs.getDate("birthDate").toLocalDate();
+            Date birthDate = rs.getDate("birthDate");
             String bloodType = rs.getString("bloodType");
             String email = rs.getString("email");
             byte[] password = rs.getBytes("password");
@@ -156,7 +156,7 @@ public class JDBCPatientManager implements PatientManager {
         if (rs.next()) {
             p = new Patient(rs.getInt("patientId"), rs.getString("name"),
                     rs.getString("surname"), rs.getString("gender"),
-                    rs.getDate("birthDate").toLocalDate(), rs.getString("bloodType"),
+                    rs.getDate("birthDate"), rs.getString("bloodType"),
                     rs.getString("email"), rs.getBytes("password"), rs.getString("symptoms"),
                     rs.getString("bitalino"));
         }
@@ -180,7 +180,7 @@ public class JDBCPatientManager implements PatientManager {
             if (rs.next()) {
                 p = new Patient(rs.getInt("patientId"), rs.getString("name"),
                     rs.getString("surname"), rs.getString("gender"),
-                    rs.getDate("birthDate").toLocalDate(), rs.getString("bloodType"),
+                    rs.getDate("birthDate"), rs.getString("bloodType"),
                     rs.getString("email"), rs.getBytes("password"), rs.getString("symptoms"),
                     rs.getString("bitalino"));
             }
