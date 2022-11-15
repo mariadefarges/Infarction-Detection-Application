@@ -8,7 +8,6 @@ import ifaces.PatientManager;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.*;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import pojos.Patient;
