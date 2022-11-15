@@ -9,7 +9,6 @@ package threadServer;
  *
  * @author carlo
  */
-
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -25,58 +24,51 @@ public class ServerThreads {
         //Create a service that is waiting in port 9000
         ServerSocket serverSocket = new ServerSocket(9000);
         Boolean clientsConnected = false;
-        
+
         try {
             System.out.println("Welcome to the Infarction Application Server.");
             System.out.println("\n1.Close the server\n");
             String option = null;
             option = InputOutput.get_String();
             while (true) {
-                if (option.equals("1")){
-                    if(clientsConnected){
+                if (option.equals("1")) {
+                    if (clientsConnected) {
                         System.out.println("There are clients still connected. \n Are you sure you want to close the server? Y/N");
                         option = InputOutput.get_String();
-                        if (option.equals("Y")){
+                        if (option.equals("Y")) {
                             System.out.println("Password: \n");
                             String password = InputOutput.get_String();
-                            if (password.equals("12345")){
+                            if (password.equals("12345")) {
                                 releaseResourcesServer(serverSocket);
                                 System.exit(0);
-                            }
-                            else{
+                            } else {
                                 System.out.println("Incorrect password.");
                             }
                         }
-                    }
-                    else{
+                    } else {
                         System.out.println("Password: \n");
                         String password = InputOutput.get_String();
-                            if (password.equals("12345")){
-                                releaseResourcesServer(serverSocket);
-                                System.exit(0);
-                            }
-                            else{
-                                System.out.println("Incorrect password.");
-                            }
+                        if (password.equals("12345")) {
+                            releaseResourcesServer(serverSocket);
+                            System.exit(0);
+                        } else {
+                            System.out.println("Incorrect password.");
+                        }
                     }
                 }
                 Socket socket = serverSocket.accept();
                 new Thread(new ServerThreadsClient(socket)).start();
-                if(!socket.isClosed()){
+                if (!socket.isClosed()) {
                     clientsConnected = true;
                 }
-                
+
             }
-        } 
-        catch (SocketException ex){
+        } catch (SocketException ex) {
             ex.printStackTrace();
-        }
-        finally {
+        } finally {
             releaseResourcesServer(serverSocket);
         }
     }
-
-    
 
     private static void releaseResourcesServer(ServerSocket serverSocket) {
         try {
@@ -87,5 +79,4 @@ public class ServerThreads {
         }
     }
 
-    }
-
+}

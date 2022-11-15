@@ -31,105 +31,132 @@ public class ServerThreadsClient implements Runnable {
     JDBCFileManager fileManager = new JDBCFileManager(jdbcManager);
     JDBCPatientManager patientManager = new JDBCPatientManager(jdbcManager);
     //fileManager.setPatientManager(patientManager);
-
+    
     public ServerThreadsClient(Socket socket) {
         this.socket = socket;
     }
-
+        
+    
     @Override
-    public void run() {
+    public void run() {  
         BufferedReader bufferedReader = null;
         InputStream inputStream = null;
-        try {
-            inputStream = socket.getInputStream();
-            bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            int opcion = 0;
-            try {
-                opcion = inputStream.read();
-            } catch (IOException e) {
+        try{
+            //inputStream = socket.getInputStream();
+            /*int opcion = 0;
+            try{
+            opcion = inputStream.read();
+            }catch(IOException e){
                 e.printStackTrace();
             }
-            switch (opcion) {
+            switch(opcion){
                 case 1:
-                    try {
-                    sendPatient();
-                } catch (IOException | SQLException e) {
-                    e.printStackTrace();
-                }
-                break;
+                    try{
+                        sendPatient();
+                    }catch(IOException | SQLException e){
+                        e.printStackTrace();
+                    }
+                    break;
                 case 2:
-                    try {
-                    sendPatientsFileNames();
-                } catch (IOException | SQLException e) {
-                    e.printStackTrace();
-                }
-                break;
+                    try{
+                        sendPatientsFileNames();
+                    }catch(IOException | SQLException e){
+                        e.printStackTrace();
+                    }
+                    break;
                 case 3:
-                    try {
-                    receiveAndSafeSignal();
-                } catch (IOException | SQLException e) {
-                    e.printStackTrace();
-                }
-                break;
+                    try{
+                        receiveAndSafeSignal();
+                    }catch(IOException | SQLException e){
+                        e.printStackTrace();
+                    }
+                    break;
                 case 4:
-                    try {
-                    register();
-                } catch (IOException | SQLException e) {
-                    e.printStackTrace();
-                }
-                break;
+                    */try{
+                        register();
+                    }catch(IOException | SQLException e){
+                        e.printStackTrace();
+                    }
+                /*    break;
                 case 5:
-                    try {
-                    login();
-                } catch (IOException | SQLException e) {
-                    e.printStackTrace();
-                }
-                break;
-            }
-        } catch (IOException ex) {
-            Logger.getLogger(ServerThreadsClient.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            try {
+                    try{
+                        login();
+                    }catch(IOException | SQLException e){
+                        e.printStackTrace();
+                    }
+                    break;
+            }*/
+        }//catch(IOException ex){
+           // Logger.getLogger(ServerThreadsClient.class.getName()).log(Level.SEVERE, null, ex);
+        //}
+        finally {
+          /*try {
                 bufferedReader.close();
             } catch (IOException ex) {
                 Logger.getLogger(ServerThreadsClient.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            try {
+            }*/
+            /*try {
                 inputStream.close();
             } catch (IOException ex) {
                 Logger.getLogger(ServerThreadsClient.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            }*/
         }
-
     }
-
-    public void register() throws IOException, SQLException {
+    
+    public void register() throws IOException, SQLException{
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         String line;
-        List<String> atributes = new ArrayList();
-        while ((line = bufferedReader.readLine()) != null) {
-            atributes.add(line);
-        }
-        String name = atributes.get(0);
+        String[] atributes = new String[10];
+        //System.out.println(bufferedReader.readLine());
+        //System.out.println(bufferedReader.readLine());
+        /*for(int i = 0; i<10; i++){
+        //while ((line = bufferedReader.readLine()) != null) {
+            atributes[i] = bufferedReader.readLine();
+//atributes.add(line);
+            
+        }*/
+        //System.out.println(atributes);
+        //int patientId = Integer.parseInt(bufferedReader.readLine());
+        String name = bufferedReader.readLine();
         System.out.println(name);
-        String surname = atributes.get(1);
+        String surname = bufferedReader.readLine();
         System.out.println(surname);
-        String gender = atributes.get(2);
+        String gender = bufferedReader.readLine();
         System.out.println(gender);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("DD-MM-YYYY");
-        LocalDate birthDate = LocalDate.parse(atributes.get(3), formatter);
-        String bloodType = atributes.get(4);
-        String email = atributes.get(5);
-        byte[] password = atributes.get(6).getBytes();
-        String symptoms = atributes.get(7);
-        String bitalino = atributes.get(8);
-
-        Patient patient = new Patient(name, surname, gender, birthDate, bloodType, email, password, symptoms, bitalino);
+        
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("YYYY-MM-DD");
+        //LocalDate d = LocalDate.parse(bufferedReader.readLine(), formatter);
+        Date birthDate = Date.valueOf(bufferedReader.readLine());
+        System.out.println(birthDate);
+        String bloodType = bufferedReader.readLine();
+        String email = bufferedReader.readLine();
+        byte[] password = bufferedReader.readLine().getBytes();
+        System.out.println(password);
+        String symptoms = bufferedReader.readLine();
+        System.out.println(symptoms);
+        String bitalino = bufferedReader.readLine();
+        System.out.println(bitalino);
+        
+        
+        /*System.out.println(name);
+        String surname = atributes[2];
+        System.out.println(surname);
+        String gender = atributes[3];
+        System.out.println(gender);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("YYYY-MM-DD");
+        LocalDate birthDate = LocalDate.parse(atributes[4], formatter);
+        String bloodType = atributes[5];
+        String email = atributes[6];
+        byte[] password = atributes[7].getBytes();
+        String symptoms = atributes[8];
+        String bitalino = atributes[9];*/
+        
+        Patient patient = new Patient(name, surname, gender, birthDate,  bloodType, email, password, symptoms, bitalino);
+        System.out.println(patient);
         patientManager.addPatient(patient);
-        System.out.println("Patient reception done successfully.\n");
         System.out.println(patient);
     }
-
+    
     public void login() throws IOException, SQLException {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         String email = bufferedReader.readLine();
@@ -138,11 +165,11 @@ public class ServerThreadsClient implements Runnable {
         PrintWriter printWriter = new PrintWriter(socket.getOutputStream(), true);
         printWriter.println(patientId);
     }
-
-    public void receiveAndSafeSignal() throws IOException, SQLException {
+    
+    public void receiveAndSafeSignal() throws IOException, SQLException{
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         int patientId = bufferedReader.read();
-        LocalDateTime current = LocalDateTime.now();
+        LocalDateTime current  = LocalDateTime.now();
         DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy.HH-mm-ss");
         String formattedDateTime = current.format(format);
         String userHome = System.getProperty("user.home");
@@ -151,15 +178,15 @@ public class ServerThreadsClient implements Runnable {
         File file = new File(userHome + path);
         FileWriter fileWriter = null;
         fileWriter = new FileWriter(file);
-        while ((line = bufferedReader.readLine()) != null) {
+        while ((line = bufferedReader.readLine()) != null) { 
             System.out.println(line);
             fileWriter.write(line);
         }
         fileManager.addFile(file, patientId);
         releaseResourcesClient(bufferedReader, socket);
     }
-
-    public void sendPatient() throws IOException, SQLException {
+    
+    public void sendPatient() throws IOException, SQLException{
         Patient patient = null;
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         int patientId = bufferedReader.read();
@@ -168,7 +195,7 @@ public class ServerThreadsClient implements Runnable {
         PrintWriter printWriter = new PrintWriter(socket.getOutputStream(), true);
         printWriter.println(patientSend);
     }
-
+    
     public void sendPatientsFileNames() throws IOException, SQLException {
         Patient patient = null;
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));

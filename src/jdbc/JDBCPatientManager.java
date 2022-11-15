@@ -27,16 +27,17 @@ public class JDBCPatientManager implements PatientManager {
 
     @Override
     public void addPatient(Patient p) throws SQLException {
-        String sql = "INSERT INTO patients (name, surname, gender, birthDate, bloodType, email,password, symptoms) VALUES (?,?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO patients (name, surname, gender, birthDate, bloodType, email,password, symptoms, bitalino) VALUES (?,?,?,?,?,?,?,?,?)";
         PreparedStatement prep = manager.getConnection().prepareStatement(sql);
         prep.setString(1, p.getName());
         prep.setString(2, p.getSurname());
         prep.setString(3, p.getGender());
-        prep.setDate(4, java.sql.Date.valueOf(p.getBirthDate()));
+        prep.setDate(4, p.getBirthDate());
         prep.setString(5, p.getBloodType());
         prep.setString(6, p.getEmail());
         prep.setBytes(7, p.getPassword());
         prep.setString(8, p.getSymptoms());
+        prep.setString(9, p.getBitalino());
         prep.executeUpdate();
         prep.close();
     }
